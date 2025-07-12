@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusMate | Your Personal Study Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlalDLrpkC8I/S1uD2W/R71x7J0p2+9k+tLz2Zl/yN+J01l0G6/2fPzG/u/k+m+w+h+Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="jeji.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-bullseye"></i> FocusMate</h1>
+        <button id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <main>
+        <div class="main-left">
+            <section id="weekly-planner" class="card">
+                <h2><i class="fas fa-calendar-alt"></i> Weekly Planner</h2>
+                <div class="planner-grid" id="planner-grid">
+                    </div>
+                <div class="controls">
+                    <button id="export-planner-btn" class="btn"><i class="fas fa-file-export"></i> Export Planner</button>
+                    <input type="file" id="import-planner-file" accept=".json" style="display: none;">
+                    <button id="import-planner-btn" class="btn"><i class="fas fa-file-import"></i> Import Planner</button>
+                </div>
+            </section>
+        </div>
+
+        <div class="main-right">
+            <section id="daily-habits" class="card">
+                <h2><i class="fas fa-check-square"></i> Daily Habits</h2>
+                <div class="habits-list" id="habits-list">
+                    <div class="habit-item" data-habit="read">
+                        <input type="checkbox" id="habit-read" class="habit-checkbox">
+                        <label for="habit-read">Read 10 pages 📖</label>
+                    </div>
+                    <div class="habit-item" data-habit="revise">
+                        <input type="checkbox" id="habit-revise" class="habit-checkbox">
+                        <label for="habit-revise">Revise notes ✍️</label>
+                    </div>
+                    <div class="habit-item" data-habit="practice">
+                        <input type="checkbox" id="habit-practice" class="habit-checkbox">
+                        <label for="habit-practice">Practice questions 🧠</label>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="habit-progress-fill"></div>
+                </div>
+                <p class="progress-text" id="habit-progress-text">0/3 habits completed</p>
+            </section>
+
+            <section id="motivational-mode" class="card quote-card">
+                <h2><i class="fas fa-lightbulb"></i> Motivational Mode</h2>
+                <blockquote class="quote-display" id="quote-display">
+                    "The best way to predict the future is to create it."
+                    <cite class="quote-author">- Abraham Lincoln</cite>
+                </blockquote>
+                <div contenteditable="true" class="focus-prompt" id="daily-focus-prompt" data-placeholder="What's your one big focus today?"></div>
+            </section>
+        </div>
+    </main>
+
+    <div id="planner-color-popover" class="color-picker-popover">
+        <span class="popover-color-dot" data-color="blue" title="Blue"></span>
+        <span class="popover-color-dot" data-color="green" title="Green"></span>
+        <span class="popover-color-dot" data-color="yellow" title="Yellow"></span>
+        <span class="popover-color-dot" data-color="pink" title="Pink"></span>
+        <span class="popover-color-dot" data-color="purple" title="Purple"></span>
+        <span class="popover-color-dot" data-color="gray" title="Clear Color"></span>
+    </div>
+
+    <script src="jeji.js"></script>
+</body>
+</html>
