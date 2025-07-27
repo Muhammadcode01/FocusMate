@@ -1,0 +1,476 @@
+/* --- CSS Variables for Theming --- */
+:root {
+    /* Light Theme */
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --accent-color: #8c7ae6; /* Purple */
+    --accent-hover: #7b68ee;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --gradient-start: rgba(140, 122, 230, 0.4);
+    --gradient-end: rgba(123, 104, 238, 0.4);
+
+    /* Planner colors */
+    --planner-blue: #e0f2f7;
+    --planner-green: #e6ffe6;
+    --planner-yellow: #fff8dc;
+    --planner-pink: #ffe6f2;
+    --planner-purple: #f2e6ff;
+    --planner-gray: #f5f5f5;
+
+    /* Dark Theme Overrides */
+    &.dark-theme {
+        --bg-primary: #2c2f33;
+        --bg-secondary: #3c3f44;
+        --text-primary: #e0e0e0;
+        --text-secondary: #b0b0b0;
+        --accent-color: #bb86fc; /* Lighter purple for dark contrast */
+        --accent-hover: #9c27b0;
+        --border-color: rgba(255, 255, 255, 0.1);
+        --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.4);
+        --glass-bg: rgba(60, 63, 68, 0.4);
+        --glass-border: rgba(90, 93, 98, 0.3);
+        --gradient-start: rgba(187, 134, 252, 0.2);
+        --gradient-end: rgba(156, 39, 176, 0.2);
+
+        --planner-blue: #3a5c68;
+        --planner-green: #3a683a;
+        --planner-yellow: #68643a;
+        --planner-pink: #683a5c;
+        --planner-purple: #5c3a68;
+        --planner-gray: #44484e;
+    }
+}
+
+/* --- Base Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-primary);
+}
+
+/* --- Header (Glassmorphism) --- */
+header {
+    padding: 1.5rem 2rem;
+    background: var(--glass-bg); /* Base background with transparency */
+    backdrop-filter: blur(10px); /* Glassmorphism blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure header stays on top */
+    /* Optional: Subtle gradient overlay for extra depth */
+    background-image: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-primary); /* Ensure text color is readable over glass */
+}
+
+header h1 .fas {
+    font-size: 1.2em;
+    color: var(--accent-color);
+}
+
+/* --- Theme Toggle --- */
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.3s ease, transform 0.2s ease;
+    outline: none;
+    padding: 5px; /* Add padding for easier clicking */
+}
+
+#theme-toggle:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+/* --- Main Content Layout --- */
+main {
+    flex-grow: 1;
+    padding: 2rem;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr; /* Default to single column */
+}
+
+/* Desktop layout */
+@media (min-width: 1024px) {
+    main {
+        grid-template-columns: 2fr 1fr; /* Planner on left, habits/quote on right */
+    }
+    .main-left {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .main-right {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+/* Common Card Style */
+.card {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    padding: 1.5rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 .fas {
+    color: var(--accent-color);
+}
+
+/* --- Weekly Planner --- */
+.planner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 10px;
+    width: 100%;
+}
+
+.planner-day {
+    background-color: var(--planner-gray); /* Default day background */
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    min-height: 150px; /* Ensure a minimum height for empty days */
+    position: relative;
+    overflow: hidden; /* For rounded corners on color strips */
+}
+
+.planner-day-header {
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.planner-task {
+    background-color: var(--planner-yellow); /* Default task background */
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: 'Indie Flower', cursive;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    min-height: 35px; /* Minimum height for editable area */
+    cursor: text;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    overflow: hidden; /* Ensures text stays within bounds */
+}
+
+.planner-task:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Specific planner task colors */
+.planner-task[data-color="blue"] { background-color: var(--planner-blue); }
+.planner-task[data-color="green"] { background-color: var(--planner-green); }
+.planner-task[data-color="yellow"] { background-color: var(--planner-yellow); }
+.planner-task[data-color="pink"] { background-color: var(--planner-pink); }
+.planner-task[data-color="purple"] { background-color: var(--planner-purple); }
+.planner-task[data-color="gray"] { background-color: var(--planner-gray); } /* For 'clear color' option */
+
+.add-task-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+    align-self: flex-start; /* Align button to start of column */
+}
+.add-task-btn:hover {
+    background: var(--accent-hover);
+}
+
+/* Planner task color picker popover */
+.color-picker-popover {
+    position: absolute;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    padding: 8px;
+    display: flex;
+    gap: 5px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+.color-picker-popover.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.popover-color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: border-color 0.1s ease, transform 0.1s ease;
+}
+.popover-color-dot:hover {
+    transform: scale(1.1);
+}
+.popover-color-dot.selected {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+/* --- Daily Habit Tracker --- */
+.habits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.habit-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--bg-primary); /* Lighter background for habit items */
+    padding: 12px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease;
+}
+
+.habit-item label {
+    flex-grow: 1;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.habit-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--accent-color);
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+.habit-checkbox:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.habit-checkbox:checked::after {
+    content: '\2713'; /* Checkmark icon */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--border-color);
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    transition: width 0.4s ease-out;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+/* --- Motivational Mode --- */
+.quote-card {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary) 80%); /* Subtle gradient for quote card */
+}
+
+.quote-display {
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: opacity 0.8s ease-in-out;
+    opacity: 0; /* Hidden by default for fade-in */
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: -10px;
+}
+
+.focus-prompt {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: var(--text-primary);
+    min-height: 60px;
+    resize: vertical;
+    overflow: auto;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.focus-prompt:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(140, 122, 230, 0.2);
+}
+
+/* --- Utility & Responsiveness --- */
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+}
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Hide elements dynamically */
+[contenteditable]:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.5rem;
+    }
+    header h1 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+    #theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+    }
+    main {
+        padding: 1.5rem;
+    }
+    .card {
+        padding: 1rem;
+    }
+    .card h2 {
+        font-size: 1.3rem;
+    }
+    .planner-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+    .quote-display {
+        font-size: 1.3rem;
+    }
+}
